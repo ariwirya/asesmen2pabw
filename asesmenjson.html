@@ -1,51 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The Adventures of Tom Sawyer</title>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <title>The Adventures Of Tom Sawyer Submission Form</title>
 </head>
 <body>
-  <h1>The Adventures of Tom Sawyer</h1>
-  <table id="book-details" class="display">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Source</th>
-        <th>Format</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <h1>The Adventures Of Tom Sawyer Submission Form</h1>
+
+  <form id="json-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="source">Source:</label>
+    <input type="text" id="source" name="source" required><br><br>
+
+    <label for="format">Format:</label>
+    <input type="text" id="format" name="format" required><br><br>
+
+    <input type="submit" value="Submit">
+  </form>
 
   <script>
-    $(document).ready(function() {
-  $.ajax({
-    url: 'https://archive.org/metadata/TheAdventuresOfTomSawyer_201303',
-    dataType: 'jsonp',
-    success: function(response) {
-      var files = response.files;
-      displayBookDetails(files);
-    },
-    error: function() {
-      alert('Failed to fetch book data.');
-    }
-  });
+    var jsonData = {
+      "name": "",
+      "source": "",
+      "format": ""
+    };
 
-  function displayBookDetails(data) {
-    var table = $('#book-details').DataTable({
-      data: data,
-      columns: [
-        { data: 'name' },
-        { data: 'source' },
-        { data: 'format' }
-      ],
-      searching: false,
-      paging: false
+    document.getElementById("name").value = jsonData.name;
+    document.getElementById("source").value = jsonData.source;
+    document.getElementById("format").value = jsonData.format;
+
+    document.getElementById("json-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var formData = {
+        name: document.getElementById("name").value,
+        source: document.getElementById("source").value,
+        format: document.getElementById("format").value
+      };
+
+      console.log(formData);
     });
-  }
-});
   </script>
 </body>
 </html>
