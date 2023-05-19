@@ -1,46 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>The Adventures Of Tom Sawyer Submission Form</title>
+    <title>The Adventures Of Tom Sawyer Submission Form</title>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-  <h1>The Adventures Of Tom Sawyer Submission Form</h1>
+    <h1>The Adventures Of Tom Sawyer Submission Form</h1>
+    <form id="apiForm">
+        <label for="nameInput">Name:</label>
+        <input type="text" id="nameInput" name="Name"><br>
+        <span id="nameError" class="error"></span><br>
 
-  <form id="json-form">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required><br><br>
+        <label for="sourceInput">Source:</label>
+        <input type="text" id="sourceInput" name="Source"><br>
+        <span id="sourceError" class="error"></span><br>
 
-    <label for="source">Source:</label>
-    <input type="text" id="source" name="source" required><br><br>
+        <label for="formatInput">Format:</label>
+        <input type="text" id="formatInput" name="Format"><br>
+        <span id="formatError" class="error"></span><br>
 
-    <label for="format">Format:</label>
-    <input type="text" id="format" name="format" required><br><br>
+        <button type="submit">Submit</button>
+    </form>
 
-    <input type="submit" value="Submit">
-  </form>
+    <script>
+        document.getElementById("apiForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            validateForm();
+        });
 
-  <script>
-    var jsonData = {
-      "name": "",
-      "source": "",
-      "format": ""
-    };
+        function validateForm() {
+            clearErrors();
 
-    document.getElementById("name").value = jsonData.name;
-    document.getElementById("source").value = jsonData.source;
-    document.getElementById("format").value = jsonData.format;
+            var nameInput = document.getElementById("nameInput");
+            var sourceInput = document.getElementById("sourceInput");
+            var formatInput = document.getElementById("formatInput");
 
-    document.getElementById("json-form").addEventListener("submit", function(event) {
-      event.preventDefault();
+            var nameError = document.getElementById("nameError");
+            var sourceError = document.getElementById("sourceError");
+            var formatError = document.getElementById("formatError");
 
-      var formData = {
-        name: document.getElementById("name").value,
-        source: document.getElementById("source").value,
-        format: document.getElementById("format").value
-      };
+            var isValid = true;
 
-      console.log(formData);
-    });
-  </script>
+            if (nameInput.value.trim() === "") {
+                nameError.textContent = "*Form 'Name' harus diisi.";
+                isValid = false;
+            }
+
+            if (sourceInput.value.trim() === "") {
+                sourceError.textContent = "*Form 'Source' harus diisi.";
+                isValid = false;
+            }
+
+            if (formatInput.value.trim() === "") {
+                formatError.textContent = "*Form 'Format' harus diisi.";
+                isValid = false;
+            }
+
+            if (isValid) {
+                console.log("Form telah disubmit!");
+            }
+        }
+
+        function clearErrors() {
+            var errorElements = document.getElementsByClassName("error");
+            for (var i = 0; i < errorElements.length; i++) {
+                errorElements[i].textContent = "";
+            }
+        }
+    </script>
 </body>
 </html>
